@@ -272,74 +272,29 @@ body {
 }
 
 /* 🎯 Stylish & Responsive Hero Banner */
+.hero-banner {
+    background-color: #ffffff;
+    /* Pure white background */
+    padding: 40px 20px;
+}
+
 .header-content {
-    position: relative;
-    min-height: 420px;
-    padding: 80px 24px 100px 24px;
-    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    border-radius: 0 0 48px 48px;
-    overflow: hidden;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
     text-align: center;
 }
 
-/* ✨ Background Glow Orbs */
-.header-content::before,
-.header-content::after {
-    content: "";
-    position: absolute;
-    width: 320px;
-    height: 320px;
-    background: radial-gradient(circle, rgba(215, 25, 32, 0.2), transparent 70%);
-    border-radius: 50%;
-    z-index: 0;
-    animation: floatOrb 18s linear infinite;
+.banner-img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.header-content::before {
-    top: -80px;
-    left: -120px;
-    background: radial-gradient(circle, rgba(21, 102, 216, 0.2), transparent 70%);
-}
-
-.header-content::after {
-    bottom: -100px;
-    right: -100px;
-}
-
-.header-content h1 {
-    font-size: 3.5rem;
-    font-weight: 900;
-    color: #1e1e1e;
-    line-height: 1.2;
-    z-index: 1;
-    margin-bottom: 20px;
-    animation: fadeSlideDown 1s ease forwards;
-    opacity: 0;
-}
-
-.header-content h1 span {
-    display: inline-block;
-    background: linear-gradient(90deg, #D71920, #1566d8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.header-content p {
-    font-size: 1.35rem;
-    color: #444;
-    max-width: 720px;
-    margin-bottom: 36px;
-    z-index: 1;
-    animation: fadeSlideUp 1s ease 0.4s forwards;
-    opacity: 0;
-}
-
-.header-content .btn-primary {
+/* 🟦 Primary CTA Button */
+.btn-primary {
     font-size: 1.2rem;
     padding: 14px 40px;
     border-radius: 30px;
@@ -349,95 +304,23 @@ body {
     border: none;
     box-shadow: 0 8px 20px rgba(21, 102, 216, 0.25);
     transition: all 0.3s ease;
-    z-index: 1;
-    animation: fadeSlideUp 1s ease 0.8s forwards;
-    opacity: 0;
     cursor: pointer;
+    text-decoration: none;
+    opacity: 1;
 }
 
-.header-content .btn-primary:hover {
+.btn-primary:hover {
     background: #D71920;
     color: #fff;
     transform: translateY(-2px);
 }
 
-/* 🔁 Animations */
-@keyframes fadeSlideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes floatOrb {
-    0% {
-        transform: scale(1) translateY(0);
-    }
-
-    50% {
-        transform: scale(1.05) translateY(-20px);
-    }
-
-    100% {
-        transform: scale(1) translateY(0);
-    }
-}
-
 /* 📱 Responsive Design */
 @media (max-width: 900px) {
-    .header-content {
-        padding: 60px 16px 70px 16px;
-        min-height: 300px;
-        border-radius: 0 0 24px 24px;
-    }
-
-    .header-content h1 {
-        font-size: 2.2rem;
-    }
-
-    .header-content p {
-        font-size: 1.1rem;
-    }
-
-    .header-content .btn-primary {
+    .btn-primary {
         font-size: 1rem;
         padding: 12px 28px;
     }
-}
-
-.btn-primary {
-    display: inline-block;
-    background-color: #ffc107;
-    color: #333;
-    padding: 15px 35px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.btn-primary:hover {
-    background-color: #e0a800;
-    transform: translateY(-3px);
 }
 
 /* Section Headings */
