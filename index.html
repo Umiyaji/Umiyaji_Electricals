@@ -233,13 +233,19 @@
         </div>
 
         <div class="testimonial-controls">
-            <button class="testimonial-arrow" id="testimonial-prev">&#8592;</button>
-            <!-- <div class="testimonial-dots" id="testimonial-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div> -->
-            <button class="testimonial-arrow" id="testimonial-next">&#8594;</button>
+            <button class="testimonial-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="white" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
+            </button>
+        
+            <button class="testimonial-arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="white" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
+            </button>
         </div>
     </div>
 </section>
@@ -358,34 +364,58 @@
         }
 
         // Testimonial slider logic
-        const testimonials = document.querySelectorAll('.testimonial-card');
-        const dots = document.querySelectorAll('.testimonial-dots .dot');
-        let current = 0;
+            document.addEventListener("DOMContentLoaded", () => {
+                const testimonials = document.querySelectorAll('.testimonial-card');
+                const dots = document.querySelectorAll('.testimonial-dots .dot');
+                const prevBtn = document.getElementById('testimonial-prev');
+                const nextBtn = document.getElementById('testimonial-next');
 
-        function showTestimonial(idx) {
-            testimonials.forEach((t, i) => {
-                t.classList.toggle('active', i === idx);
+                let current = 0;
+                const total = testimonials.length;
+
+                // Show specific testimonial
+                function showTestimonial(idx) {
+                    testimonials.forEach((t, i) => {
+                        t.classList.toggle('active', i === idx);
+                    });
+                    dots.forEach((d, i) => {
+                        d.classList.toggle('active', i === idx);
+                    });
+                    current = idx;
+                }
+
+                // Previous Button
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        const newIndex = (current - 1 + total) % total;
+                        showTestimonial(newIndex);
+                    });
+                }
+
+                // Next Button
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        const newIndex = (current + 1) % total;
+                        showTestimonial(newIndex);
+                    });
+                }
+
+                // Dots Navigation
+                dots.forEach((dot, i) => {
+                    dot.addEventListener('click', () => showTestimonial(i));
+                });
+
+                // Auto Slide
+                setInterval(() => {
+                    const newIndex = (current + 1) % total;
+                    showTestimonial(newIndex);
+                }, 5000);
+
+                // Initialize the first testimonial
+                showTestimonial(0);
             });
-            dots.forEach((d, i) => {
-                d.classList.toggle('active', i === idx);
-            });
-            current = idx;
-        }
-
-        document.getElementById('testimonial-prev').onclick = function () {
-            showTestimonial((current - 1 + testimonials.length) % testimonials.length);
-        };
-        document.getElementById('testimonial-next').onclick = function () {
-            showTestimonial((current + 1) % testimonials.length);
-        };
-        dots.forEach((dot, i) => {
-            dot.onclick = () => showTestimonial(i);
-        });
-
-        setInterval(() => {
-            showTestimonial((current + 1) % testimonials.length);
-        }, 7000);
     </script>
+
 
     
 
