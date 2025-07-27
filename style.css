@@ -897,35 +897,25 @@ section h2::after {
 
 .testimonial-arrow {
     background: #1566d8;
-    color: #fff;
     border: none;
     border-radius: 50%;
-    width: 44px;
-    height: 44px;
-    font-size: 1.5rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .testimonial-arrow:hover {
     background: #004aad;
+    transform: scale(1.05);
 }
 
-.testimonial-dots {
-    display: flex;
-    gap: 10px;
-}
-
-.dot {
-    width: 30px;
-    height: 6px;
-    border-radius: 3px;
-    background: #e0e0e0;
-    transition: background 0.3s;
-}
-
-.dot.active {
-    background: #1566d8;
+.testimonial-arrow svg {
+    width: 24px;
+    height: 24px;
 }
 
 /* Responsive */
