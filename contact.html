@@ -120,7 +120,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </section>
 
@@ -143,7 +142,6 @@
                 <img src="brands/brand12.png" alt="Almonard Logo">
                 <img src="brands/brand13.png" alt="Taparia Logo">
                 <img src="brands/brand14.png" alt="Siemens Logo">
-                <img src="brands/brand15.png" alt="KSB Logo">
             </div>
         </div>
     </section>
@@ -174,10 +172,11 @@
                     <a href="https://maps.app.goo.gl/9jYehLhCnPvmdQEr7" target="_blank"
                         style="color: #ffc107; text-decoration: underline;">
                         Shop No.1, Ground Floor, Navdeep Complex,<br>
-                        Nr. State Bank,Plot No. 109/3, GIDC Estate,
+                        Nr. State Bank,Plot No. 109/3, GIDC Estate, 
                         Panoli - 394 116
                     </a>
                 </p>
+
                 <p><strong>Phone:</strong> <a href="tel:+919427252498">+91-94272 52498</a></p>
                 <p><strong>Email:</strong> <a href="mailto:umiyajiel.panoli@gmail.com">umiyajiel.panoli@gmail.com</a>
                 </p>
@@ -257,6 +256,109 @@
         aria-label="Chat with us on WhatsApp">
         <img src="images/whatsapp.png" alt="WhatsApp" />
     </a>
+
+    <!-- Floating Robot Icon Button -->
+    <div class="chat-toggle" id="chatToggle">
+        <img src="images/robot-icon.jpg" alt="Chatbot" />
+        <span class="chat-tooltip">Chat with Me</span>
+    </div>
+    
+    <!-- Chatbot Window -->
+    <div class="chatbot-container" id="chatbotContainer" style="display: none;">
+        <div class="chat-header">
+            UMIYAJI AI ASSISTANT
+            <span class="chat-close" id="chatCloseBtn">×</span>
+        </div>
+        <div class="chat-window" id="chatWindow"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Type your message..." />
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+    
+    
+    <script>
+        const chatToggle = document.getElementById("chatToggle");
+        const chatContainer = document.getElementById("chatbotContainer");
+        const chatCloseBtn = document.getElementById("chatCloseBtn");
+
+        // Toggle chat window visibility and hide robot icon
+        chatToggle.addEventListener("click", () => {
+            const isVisible = chatContainer.style.display === "block";
+            chatContainer.style.display = isVisible ? "none" : "block";
+            chatToggle.classList.toggle("hidden", !isVisible); // Hide robot icon when chat window is open
+        });
+
+        chatCloseBtn.addEventListener("click", () => {
+            chatContainer.style.display = "none";
+            chatToggle.classList.remove("hidden"); // Show robot icon when chat window is closed
+        });
+
+        // Ensure messages scroll properly and input box stays visible
+        const chatWindow = document.getElementById("chatWindow");
+        const chatInput = document.getElementById("chatInput");
+        const sendBtn = document.getElementById("sendBtn");
+
+        // Scroll to the bottom of the chat window when a new message is added
+        function appendMessage(msg, type = 'user') {
+            const msgDiv = document.createElement('div');
+            msgDiv.classList.add('chat-bubble', type === 'user' ? 'user-msg' : 'bot-msg');
+            msgDiv.textContent = msg;
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to the bottom
+        }
+
+        function addTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.classList.add('chat-bubble', 'bot-msg');
+            typingDiv.textContent = 'Typing...';
+            typingDiv.id = 'typingIndicator';
+            chatWindow.appendChild(typingDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to the bottom
+        }
+
+        function removeTypingIndicator() {
+            const typingDiv = document.getElementById('typingIndicator');
+            if (typingDiv) typingDiv.remove();
+        }
+
+        async function sendMessage() {
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
+
+            appendMessage(userMessage, 'user');
+            chatInput.value = '';
+            addTypingIndicator();
+
+            try {
+                const response = await fetch("https://umiyaji.app.n8n.cloud/webhook/Chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: userMessage })
+                });
+
+                const data = await response.json();
+                removeTypingIndicator();
+
+                if (data && data.output) {
+                    appendMessage(data.output, 'bot');
+                } else {
+                    appendMessage("⚠️ Server responded without 'output' field.", 'bot');
+                    console.warn("Unexpected response:", data);
+                }
+            } catch (error) {
+                removeTypingIndicator();
+                console.error("Fetch error:", error);
+                appendMessage("❌ Unable to reach server.", 'bot');
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
 
 </body>
 
